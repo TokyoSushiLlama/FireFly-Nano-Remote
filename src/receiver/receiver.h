@@ -8,7 +8,7 @@
 #include "VescUart.h"
 #include <Preferences.h>
 
-#ifdef RECEIVER_SCREEN
+
 #include <Adafruit_GFX.h>
 #include "Adafruit_SSD1306.h"
 // fonts
@@ -20,7 +20,6 @@
 #include <Fonts/FreeSans12pt7b.h>
 
 // Wifi
-#endif
 
 Preferences prefs;
 
@@ -138,7 +137,6 @@ struct ReceiverSettings
   float estopInterval;
 } receiverSettings;
 
-#ifdef RECEIVER_SCREEN
 const GFXfont *fontDigital = &Segment13pt7b; // speed, distance, ...
 // const GFXfont* fontPico = &Segment6pt7b;      //
 const GFXfont *fontDesc = &Dialog_plain_9; // km/h
@@ -149,7 +147,6 @@ const GFXfont *font = &FreeSans9pt7b;     // connection screen
 
 void updateScreen();
 void drawBattery();
-#endif
 
 bool prepareUpdate();
 void acquireSetting();

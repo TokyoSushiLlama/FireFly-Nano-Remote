@@ -19,9 +19,7 @@ RH_RF69 radio(RF_CS, RF_DI0);
 HardwareSerial MySerial(1);
 #endif
 
-#ifdef RECEIVER_SCREEN
 Adafruit_SSD1306 display(RST_OLED);
-#endif
 
 Smoothed<double> batterySensor;
 
@@ -119,10 +117,10 @@ void setup()
   pinMode(Vext, OUTPUT);
   digitalWrite(Vext, LOW);
 
-#ifdef RECEIVER_SCREEN
-  //display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
-  //display.powerOn();
-#endif
+
+  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+  display.powerOn();
+
 }
 
 bool isTelemetryLost()
@@ -251,7 +249,6 @@ bool prepareUpdate()
   debug(wifiStatus);
 }
 
-#ifdef RECEIVER_SCREEN
 
 int getStringWidth(String s)
 {
@@ -415,7 +412,6 @@ void drawBattery()
     drawStringCentered(String(pc, 0) + "%", x + (w - x) / 2, 31, fontBig);
   }
 }
-#endif // RECEIVER_SCREEN
 
 void loop()
 { // core 1
@@ -428,12 +424,12 @@ void loop()
 #ifdef ARDUINO_SAMD_ZERO
   radioExchange();
   stateMachine();
-#elif RECEIVER_SCREEN
+#else
   if (receiverData.state == UPDATE)
   {
     ArduinoOTA.handle();
   }
-  //updateScreen(); // 25 ms
+  updateScreen(); // 25 ms
   vTaskDelay(1);
 #endif
 }
@@ -1463,14 +1459,14 @@ void loadSettings()
   prefs.end();**/
 
   // General settings
-  receiverSettings.maxRange = 60;
-  receiverSettings.batteryCells = 12;
+  receiverSettings.maxRange = 20;
+  receiverSettings.batteryCells = 10;
   receiverSettings.batteryType = 0;
   receiverSettings.motorPoles = 14;
   receiverSettings.wheelDiameter = 97;
   receiverSettings.wheelPulley = 36;
-  receiverSettings.motorPulley = 14;
-  receiverSettings.vescCount = 1;
+  receiverSettings.motorPulley = 15;
+  receiverSettings.vescCount = 2;
   receiverSettings.vescMode = UART_ADC;
 
   // Estop settings
