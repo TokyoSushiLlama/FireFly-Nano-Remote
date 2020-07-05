@@ -1,12 +1,39 @@
 
 #include "remote.h"
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1351.h>
+#include <SPI.h>
 
 // define display
 Adafruit_SSD1306 display(RST_OLED);
 
 Smoothed <double> batterySensor;
 
-// Adafruit_SSD1306 display(64, 128, &Wire, DISPLAY_RST, 700000, 700000);
+
+
+// Screen dimensions
+#define SCREEN_WIDTH  128
+#define SCREEN_HEIGHT 128 // Change this to 96 for 1.27" OLED.
+
+// You can use any (4 or) 5 pins 
+#define SCLK_PIN 18
+#define MOSI_PIN 23
+#define DC_PIN   16
+#define CS_PIN   17
+#define RST_PIN  5
+
+#define THROTTLE_PIN 1
+#define BUTTON_PIN 2
+
+// Color definitions
+#define	BLACK           0x0000
+#define	BLUE            0x001F
+#define	RED             0xF800
+#define	GREEN           0x07E0
+#define CYAN            0x07FF
+#define MAGENTA         0xF81F
+#define YELLOW          0xFFE0  
+#define WHITE           0xFFFF
 
 /************ Radio Setup ***************/
 #define drawVLine(x, y, l) display.drawLine (x, y, x, y + l, WHITE); // display.drawVerticalLine (x, y, l);
@@ -1831,8 +1858,6 @@ void drawMainPage() {
   int x = 0;
   int y = 37;
   int h;
-
-  //  display.drawFrame(0,0,64,128);
 
   // --- Speed ---
   value = speed();

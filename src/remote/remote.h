@@ -5,7 +5,7 @@
 #include "utils.h"
 
 #include <Adafruit_GFX.h>
-#include "Adafruit_SSD1306.h"
+#include <Adafruit_SSD1351.h>
 #include <Smoothed.h>
 
 #ifdef ARDUINO_SAMD_ZERO
